@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row" style="margin-top:20px; margin-left:20px">
+   <div class="col-8">
+		<h2>Available Pokemon on the Market</h2>
+		<p>Click on one of the Pokemon to catch it</p>
+		<br>
+		   {% if pokemon %}
+			<div class="list-group">
+				{% for poke in pokemon %}
+					{% include 'modals/pokemon_modals.html' %}
+					  <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+					    <div class="d-flex w-100 justify-content-between">
+							<h5 class="mb-1">{{ poke.name }}
+                                <img class="d-inline-block" src="https://img.pokemondb.net/sprites/sword-shield/icon/{{ poke.name.lower() }}.png" style="width:50px; height:35px; margin-top:-18px; margin-left:-11px">
+                            </h5>
+
+							<small>Price: {{ poke.price }} PokeBalls</small>
+							<small>Type: {{ poke.type }}</small>
+							<small>{{ poke.numOfTrainers() }} owners</small>
+					    </div>
+					    <p class="mb-1">
+							<button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-Pokedex-{{ poke.id }}">Pokedex</button>
+							<button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-CatchConfirm-{{ poke.id }}">Catch</button>
+						</p>
+						<div class="review mb-1" id="{{ poke.id }}" style="display:inline-block">
+							<button class="btn btn-outline btn-success far fa-thumbs-up" id="like" style="display:inline-block"> {{ poke.likes }}</button>
+						</div>
+						<div class="review mb-1" id="{{ poke.id }}" style="display:inline-block">
+							<button class="btn btn-outline btn-danger far fa-thumbs-down" id="dislike" style="display:inline-block"> {{ poke.dislikes }}</button>
+					    </div>
+					  </a>
+		   		{% endfor %}
+			</div>
+		  {% endif %}
+	</div>
+   <div class="col-4">
+        <h2>Owned Pokemon</h2>
+        <p>Click on sell to put a Pokemon back on the Market</p>
+        <br>
+		<div class="row">
+			{% for ownedPoke in ownedPokemon %}
+				{% include 'modals/owned_pokemon_modals.html' %}
+				<div class="col-md-6">
+					<div style="margin-bottom: 5px" class="card text-center">
+						<div class="card-body">
+							<h6 class="card-title">{{ ownedPoke.name }}</h6>
+							<button type="button" class="btn btn-outline-danger" style="margin-bottom: 5px"
+							data-toggle="modal" data-target="#Modal-SellConfirm-{{ ownedPoke.id }}">
+								Sell this Pokemon
+							</button>
+							<p class="card-text"><strong>
+								This Pokemon worth {{ ownedPoke.price }} PokeBalls
+							</strong></p>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+   </div>
+</div>
+{% endblock %}

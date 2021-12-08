@@ -1,0 +1,68 @@
+
+<!-- Pokedex -->
+<div class="modal fade" id="Modal-Pokedex-{{ poke.id }}"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabel">
+            <img src="https://img.pokemondb.net/artwork/large/{{ poke.name.lower() }}.jpg" style="width:100px; height:100px;">
+            {{ poke.name }}
+        </h5>
+        <button type="button" class="close"
+                data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{ poke.description }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"
+                data-dismiss="modal">Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Catch Confirm -->
+<div class="modal fade" id="Modal-CatchConfirm-{{ poke.id }}"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabel">
+          <!-- -->
+          {{ poke.name }}
+        </h5>
+        <button type="button" class="close"
+                data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST">
+          {{ catchForm.hidden_tag() }}
+          <h4 class="text-center">
+            Are you sure you want to catch {{ poke.name }} for {{ poke.price }} PokeBalls?
+          </h4>
+          <br>
+          <h6 class="text-center">
+            By clicking Catch, you will catch this pokemon.
+          </h6>
+          <br>
+          <input id="catched_pokemon" name="catched_pokemon" type="hidden" value="{{poke.name}}">
+          {{ catchForm.submit(class="btn btn-outline-success btn-block") }}
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"
+                data-dismiss="modal">Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

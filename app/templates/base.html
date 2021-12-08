@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='fontawesome-free-5.3.1-web/css/all.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='sticky_footer.css') }}">
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+    <style>
+    ul#menu li {
+        display:inline;
+    }
+    </style>
+    {% if title %}
+        <title>{{ title }}</title>
+        {% else %}
+        <title> No title specified</title>
+    {% endif %}
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark" style="background-color: crimson">
+      <a class="navbar-brand" href="#">Pokemon Market</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item"><a class="nav-link" href="/home">Home<span class="sr-only">(current)</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="/market">Market</a></li>
+        </ul>
+
+        {% if current_user.is_authenticated %}
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" style="color: darkred; font-weight: bold">
+              {{ current_user.pokeballsWithComma }}
+              <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg" style="width:20px; height:20px; position:relative; top:-2px;">
+            </a>
+          </li>
+
+          <li class="nav-item"><a class="nav-link">Welcome, {{ current_user.trainername }}</a></li>
+          <li class="nav-item"><a class="nav-link" href="/changePassword">Change Password</a></li>
+          <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+        </ul>
+
+        {% else %}
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="/signUp">Sign Up</a></li>
+        </ul>
+
+        {% endif %}
+      </div>
+    </nav>
+ 
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+          <div class="alert alert-{{ messages[0][0] }}">
+            <button type="button" class="m1-2 mb-1 close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            {{ messages[0][1] }}
+          </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+    </div>
+  </div>
+</div>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery.min.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='review.js') }}" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <!-- Cookie Consent -->
+    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+    <script>
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#aa0000",
+          "text": "#ffdddd"
+        },
+        "button": {
+          "background": "#ff0000"
+        }
+      },
+      "type": "opt-in"
+    });
+    </script>
+  </body>
+</html>
+ 
